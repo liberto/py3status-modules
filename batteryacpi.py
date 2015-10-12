@@ -62,36 +62,34 @@ class Py3status:
             'full_text': ''
         }
 
+        output = "battery "
+
         #form string
-        print raw_acpi()
         acpiNow = acpi()[0]
-        print acpiNow
         charging = (acpiNow[1] == 'Charging')
         percentage = acpiNow[2]
         if acpiNow[3]:
-            timeRemaining = acpiNow[3] + " "
+            timeRemaining = acpiNow[3][:-3] + " "
         else:
             timeRemaining = ""
-        output = timeRemaining + str(percentage) + "%"
+        output += timeRemaining + str(percentage) + "%"
         if charging:
             output += " Charging"
 
-        #set color
-        if percentage<=20:
+        #set color and launch popup alerts
+        if charging==True:
+            response['color']='#00FF00'
+        elif percentage<=10:
             response['color']='#FF3300'
-        if percentage<=7:
-            t = response['cached_until']
-            tInt = int(float(t))
-            tIntEven = (tInt%10) >= 5
-            if tIntEven:
-                response['color']='#EED202'
-            else:
-                response['color']='#FF3300'
-
+            os.popen("notify-send --icon=/home/sbl/.i3/py3status/lowbattery.png 'low battery' 'plug in your charger'")
+        elif percentage<=5:
+            response['color']='#FF3300'
+            os.popen("notify-send --icon=/home/sbl/.i3/py3status/lowbattery.png 'low battery' 'no seriouesly, plug in your charger now.'")
 
         response['full_text'] += '{} '.format(output)
         response['full_text'] = response['full_text'].strip()
     
+
         return response
 
     

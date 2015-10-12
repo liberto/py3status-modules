@@ -59,7 +59,7 @@ class Py3status:
             raise Exception('got status {}'.format(status))
 
         # return current today + forecast_days days forecast
-        return tempature + "|" + high + "|" + low
+        return "Grinnell, IA temp" + tempature + " hi" + high + " lo" + low
 
 
 
@@ -70,7 +70,7 @@ class Py3status:
 
         response = {
             'cached_until': time() + self.cache_timeout,
-            'color':'#00ebff',
+            'color':'#ffa500',
             'full_text': ''
         }
 

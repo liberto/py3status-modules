@@ -10,8 +10,8 @@ from time import time
 import os
 import requests
 
-def raw_uptime():
-    return os.popen("uptime").read()
+def raw_df():
+    return os.popen("df -h").read()
 
 class Py3status:
 
@@ -21,25 +21,23 @@ class Py3status:
 
     
 
-    def mybattery(self, i3s_output_list, i3s_config):
+    def mydisk(self, i3s_output_list, i3s_config):
         """
         This method gets executed by py3status
         """
 
         response = {
             'cached_until': time() + self.cache_timeout,
-            'color':'#99FF33',
+            'color':'#FF3399',
             'full_text': ''
         }
         output = "uptime "
-        splitRawUptime = raw_uptime().strip().split(" ")
-        output+=splitRawUptime[2] + ' ' + splitRawUptime[3]
-        if splitRawUptime[3]!='min,':
-            output += ' ' + splitRawUptime[4] + ' ' + splitRawUptime[5]
-        if output[-1]==' ':
-            output = output[:-1]
-        if output[-1]==',':
-            output = output[:-1]
+        splitDf = raw_df().strip().split("\n")
+        x=0
+        while splitDf[x][:27] != '/dev/mapper/ubuntu--vg-root':
+            x+=1
+        splitLine = splitDf[x].split(" ")
+        output = splitLine[8] + " remaining"
         response['full_text'] += '{} '.format(output)
         response['full_text'] = response['full_text'].strip()
     
@@ -51,7 +49,6 @@ if __name__ == "__main__":
     """
     Test this module by calling it directly.
     """
-    print raw_uptime().strip().split(" ")
     from time import sleep
     x = Py3status()
     config = {
@@ -59,6 +56,5 @@ if __name__ == "__main__":
         'color_bad': '#FF0000',
     }
     while True:
-        print(x.mybattery([], config))
-	print raw_uptime().strip().split(" ")
+        print(x.mydisk([], config))
         sleep(1)
