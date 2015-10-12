@@ -6,3 +6,4 @@
 - **batteryacpi.py** displays information about your battery from the *acpi* tool. Includes battery percent left, discharging/recharging status, and time to discharge/recharge.
 - **uptime.py** displays machine's uptime since last boot using the *uptime* tool.
 - **temperature.py** displays weather information using Yahoo! weather. Includes current weather, today's high, and today's low.
+- **mydisk.py** reports remaining disk space. I was having trouble making the i3status 'disk' module work with py3status so I wrote a py3status version.
