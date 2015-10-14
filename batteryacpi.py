@@ -79,12 +79,12 @@ class Py3status:
         #set color and launch popup alerts
         if charging==True:
             response['color']='#00FF00'
-        elif percentage<=10:
-            response['color']='#FF3300'
-            os.popen("notify-send --icon=/home/sbl/.i3/py3status/lowbattery.png 'low battery' 'plug in your charger'")
         elif percentage<=5:
             response['color']='#FF3300'
             os.popen("notify-send --icon=/home/sbl/.i3/py3status/lowbattery.png 'low battery' 'no seriouesly, plug in your charger now.'")
+        elif percentage<=10:
+            response['color']='#FF3300'
+            os.popen("notify-send --icon=/home/sbl/.i3/py3status/lowbattery.png 'low battery' 'plug in your charger'")
 
         response['full_text'] += '{} '.format(output)
         response['full_text'] = response['full_text'].strip()
