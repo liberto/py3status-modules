@@ -59,7 +59,7 @@ class Py3status:
             raise Exception('got status {}'.format(status))
 
         # return current today + forecast_days days forecast
-        return "Grinnell, IA temp" + tempature + " hi" + high + " lo" + low
+        return "Grinnell, IA " + tempature + "F hi" + high + " lo" + low
 
 
 
